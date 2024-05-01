@@ -1,16 +1,19 @@
 // initial state
 import { StoreOptions } from "vuex";
+import accessEnum from "@/access/accessEnum";
 
 export default {
   namespaced: true,
   state: () => ({
     loginUser: {
       userName: "未登录",
+      userRole: accessEnum.NOT_LOGIN,
     },
   }),
   actions: {
     getLoginUser({ commit, state }, payload) {
-      commit("updateUser", { userName: "lulu" });
+      // todo 改为远程请求获取登录信息
+      commit("updateUser", payload);
     },
   },
   mutations: {

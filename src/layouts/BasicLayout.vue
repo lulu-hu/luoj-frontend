@@ -9,7 +9,6 @@
       </a-layout-content>
       <a-layout-footer class="footer">Footer</a-layout-footer>
     </a-layout>
-    >
   </div>
 </template>
 
@@ -25,12 +24,13 @@
 #basicLayout .content {
   background: linear-gradient(to right, #bbb, #fff);
   margin-bottom: 16px;
+  padding: 20px;
 }
 
 #basicLayout .footer {
   background: #efefef;
   padding: 16px;
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
