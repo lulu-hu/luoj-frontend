@@ -55,18 +55,6 @@ const visibleRoutes = computed(() => {
   });
 });
 
-// // 展示在菜单的路由数组
-// const visibleRoutes = routes.filter((item, index) => {
-//   if (item.meta?.hideInMenu) {
-//     return false;
-//   }
-//   // 根据权限过滤菜单
-//   if (!checkAccess(loginUser, item?.meta?.access as string)) {
-//     return false;
-//   }
-//   return true;
-// });
-
 // 默认主页
 const selectedKeys = ref(["/"]);
 
@@ -77,7 +65,7 @@ router.afterEach((to, from, failure) => {
 setTimeout(() => {
   store.dispatch("user/getLoginUser", {
     userName: "lulu",
-    userRole: accessEnum.ADMIN,
+    // userRole: accessEnum.ADMIN,
   });
 }, 3000);
 
