@@ -14,7 +14,7 @@
         >
           <div class="title-bar">
             <img class="logo" src="../assets/OIP-C.jpg" />
-            <div class="title">虂 OJ</div>
+            <div class="title">小鹿 OJ</div>
           </div>
         </a-menu-item>
         <a-menu-item v-for="item in visibleRoutes" :key="item.path"
@@ -62,12 +62,12 @@ router.afterEach((to, from, failure) => {
   selectedKeys.value = [to.path];
 });
 
-setTimeout(() => {
-  store.dispatch("user/getLoginUser", {
-    userName: "lulu",
-    // userRole: accessEnum.ADMIN,
-  });
-}, 3000);
+// setTimeout(() => {
+//   store.dispatch("user/getLoginUser", {
+//     userName: "lulu",
+//     // userRole: accessEnum.ADMIN,
+//   });
+// }, 3000);
 
 const doMenuClick = (key: string) => {
   router.push({

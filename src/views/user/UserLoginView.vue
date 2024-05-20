@@ -23,10 +23,20 @@
         <a-button
           style="
             width: 120px;
+            margin-left: 50px;
+            margin-right: 100px;
             background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
           "
           html-type="submit"
           >登录
+        </a-button>
+        <a-button
+          style="
+            width: 120px;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+          "
+          href="/user/register"
+          >注册
         </a-button>
       </a-form-item>
     </a-form>
@@ -63,6 +73,7 @@ const handleSubmit = async () => {
       path: "/",
       replace: true,
     });
+    message.success("登录成功");
   } else {
     message.error("登录失败，" + res.message);
   }

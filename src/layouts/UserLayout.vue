@@ -4,11 +4,11 @@
       <a-layout-header class="header">
         <a-space>
           <img src="../assets/OIP-C.jpg" class="logo" />
-          <div>虂 OJ</div>
+          <div>小鹿 OJ</div>
         </a-space>
       </a-layout-header>
       <a-layout-content style="height: 600px" class="content">
-        <UserLoginView />
+        <router-view />
       </a-layout-content>
       <a-layout-footer class="footer">Footer</a-layout-footer>
     </a-layout>
@@ -46,11 +46,3 @@
   text-align: center;
 }
 </style>
-<script>
-import { defineComponent } from "vue";
-import UserLoginView from "@/views/user/UserLoginView.vue";
-
-export default defineComponent({
-  components: { UserLoginView },
-});
-</script>
