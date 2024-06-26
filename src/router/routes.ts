@@ -1,12 +1,14 @@
 import { RouteRecordRaw } from "vue-router";
 import HomeView from "@/views/ExampleView.vue";
 import AdminView from "@/views/AdminView.vue";
-import NoAuthView from "@/views/NoAuthView.vue";
+
 import UserLoginView from "@/views/user/UserLoginView.vue";
 import UserRegisterView from "@/views/user/UserRegisterView.vue";
 import accessEnum from "@/access/accessEnum";
 
 import UserLayout from "@/layouts/UserLayout.vue";
+import AddQuestionView from "@/views/question/AddQuestionView.vue";
+import NoAuthView from "@/views/NoAuthView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -27,6 +29,14 @@ export const routes: Array<RouteRecordRaw> = [
     ],
     meta: {
       hideInMenu: true,
+    },
+  },
+  {
+    path: "/add/question",
+    name: "创建题目",
+    component: AddQuestionView,
+    meta: {
+      access: accessEnum.ADMIN,
     },
   },
   {
