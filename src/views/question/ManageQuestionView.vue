@@ -9,6 +9,7 @@
         current: searchParams.current,
         total,
       }"
+      @page-change="onPageChange"
     >
       <template #optional="{ record }">
         <a-space>
@@ -21,12 +22,10 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watchEffect } from "vue";
 import { Question, QuestionControllerService } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
-
-const show = ref(true);
 
 const dataList = ref([]);
 const total = ref(0);
@@ -46,6 +45,13 @@ const loadData = async () => {
     message.error("加载失败." + res.message);
   }
 };
+
+/**
+ *  监听 searchParams 变量, 改变时出发页面的重新加载
+ */
+watchEffect(() => {
+  loadData();
+});
 
 /**
  *  页面加载时，请求数据
@@ -104,6 +110,13 @@ const columns = [
     slotName: "optional",
   },
 ];
+
+const onPageChange = (page: number) => {
+  searchParams.value = {
+    ...searchParams.value,
+    current: page,
+  };
+};
 
 const doDelete = async (question: Question) => {
   const res = await QuestionControllerService.deleteQuestionUsingPost({

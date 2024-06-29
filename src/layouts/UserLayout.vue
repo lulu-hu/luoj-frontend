@@ -1,13 +1,13 @@
 <template>
   <div id="userLayout">
-    <a-layout style="height: 100%">
+    <a-layout style="min-height: 100vh">
       <a-layout-header class="header">
         <a-space>
           <img src="../assets/OIP-C.jpg" class="logo" />
           <div>小鹿 OJ</div>
         </a-space>
       </a-layout-header>
-      <a-layout-content style="height: 600px" class="content">
+      <a-layout-content class="content">
         <router-view />
       </a-layout-content>
       <a-layout-footer class="footer">Footer</a-layout-footer>
@@ -33,13 +33,13 @@
 }
 
 #userLayout .content {
-  margin-bottom: 264px;
+  margin-bottom: 16px;
   padding: 20px;
 }
 
 #userLayout .footer {
   padding: 16px;
-  position: absolute;
+  position: sticky;
   bottom: 0;
   left: 0;
   right: 0;
