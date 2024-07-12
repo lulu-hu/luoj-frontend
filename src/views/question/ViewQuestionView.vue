@@ -52,7 +52,7 @@
               <a-option>java</a-option>
               <a-option>python</a-option>
               <a-option>golang</a-option>
-              <a-option>c++</a-option>
+              <a-option>cpp</a-option>
               <a-option>javascript</a-option>
               <a-option>php</a-option>
             </a-select>
@@ -79,7 +79,6 @@ import { onMounted, ref, defineProps, withDefaults } from "vue";
 import {
   QuestionControllerService,
   type QuestionSubmitAddRequest,
-  QuestionSubmitControllerService,
   QuestionVO,
 } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
@@ -116,7 +115,7 @@ const doSubmit = async () => {
   if (!question.value?.id) {
     return;
   }
-  const res = await QuestionSubmitControllerService.doQuestionSubmitUsingPost({
+  const res = await QuestionControllerService.doQuestionSubmitUsingPost({
     ...form.value,
     questionId: question.value?.id,
   });

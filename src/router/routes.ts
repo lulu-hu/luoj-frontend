@@ -9,6 +9,7 @@ import AddQuestionView from "@/views/question/AddQuestionView.vue";
 import NoAuthView from "@/views/NoAuthView.vue";
 import ManageQuestionView from "@/views/question/ManageQuestionView.vue";
 import QuestionView from "@/views/question/QuestionView.vue";
+import QuestionSubmitView from "@/views/question/QuestionSubmitView.vue";
 import ViewQuestionView from "@/views/question/ViewQuestionView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
@@ -36,6 +37,11 @@ export const routes: Array<RouteRecordRaw> = [
     path: "/questions",
     name: "浏览题目",
     component: QuestionView,
+  },
+  {
+    path: "/question_submit",
+    name: "提交记录",
+    component: QuestionSubmitView,
   },
   {
     path: "/view/question/:id",

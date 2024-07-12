@@ -1,5 +1,12 @@
 # luoj-frontend
 
+
+## 根据后台生成代码
+```
+openapi --input http://localhost:8081/api/v2/api-docs --output ./generated --client axios
+```
+
+
 ## Project setup
 ```
 npm install
