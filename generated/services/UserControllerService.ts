@@ -93,7 +93,9 @@ export class UserControllerService {
    * @returns BaseResponse_LoginUserVO_ OK
    * @throws ApiError
    */
-  public static getLoginUserUsingGet(): CancelablePromise<BaseResponse_LoginUserVO_> {
+  public static getLoginUserUsingGet(
+    token: any
+  ): CancelablePromise<BaseResponse_LoginUserVO_> {
     return __request(OpenAPI, {
       method: "GET",
       url: "/api/user/get/login",

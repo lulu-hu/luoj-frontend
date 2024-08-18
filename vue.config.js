@@ -7,3 +7,10 @@ module.exports = defineConfig({
     config.plugin("monaco").use(new MonacoWebpackPlugin());
   },
 });
+
+module.exports = {
+  devServer: {
+    historyApiFallback: true,
+    allowedHosts: "all",
+  },
+};

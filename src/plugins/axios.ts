@@ -1,7 +1,13 @@
 import axios from "axios";
+import { RequestOption } from "@arco-design/web-vue";
 
 axios.interceptors.request.use(
   function (config) {
+    const token = localStorage.getItem("Authorization");
+    console.log("请求23", token);
+    if (token) {
+      config.headers["Authorization"] = `${token}`;
+    }
     return config;
   },
   function (error) {

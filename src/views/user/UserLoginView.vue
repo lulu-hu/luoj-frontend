@@ -66,6 +66,8 @@ const store = useStore();
  */
 const handleSubmit = async () => {
   const res = await UserControllerService.userLoginUsingPost(form);
+  console.log("res:", res);
+  localStorage.setItem("Authorization", res?.data?.token);
   // 登录成功
   if (res.code === 0) {
     await store.dispatch("user/getLoginUser");
