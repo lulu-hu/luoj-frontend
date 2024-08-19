@@ -33,7 +33,13 @@
         </a-space>
       </template>
       <template #acceptedRate="{ record }">
-        {{ `${record.submitNum ? record.acceptNum / record.submitNum : "0"}%` }}
+        {{
+          `${
+            record.submitNum
+              ? ((record.acceptNum / record.submitNum) * 100).toFixed(2)
+              : "0"
+          }%`
+        }}
       </template>
       <template #createTime="{ record }">
         {{ record.createTime }}

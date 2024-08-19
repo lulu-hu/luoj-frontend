@@ -84,6 +84,7 @@ import {
 import message from "@arco-design/web-vue/es/message";
 import CodeEditor from "@/components/CodeEditor.vue";
 import MdViewer from "@/components/MdViewer.vue";
+import { useRouter } from "vue-router";
 
 interface Props {
   id: string;
@@ -94,6 +95,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const question = ref<QuestionVO>();
+const router = useRouter();
 
 const loadData = async () => {
   const res = await QuestionControllerService.getQuestionVoByIdUsingGet(
@@ -120,6 +122,9 @@ const doSubmit = async () => {
     questionId: question.value?.id,
   });
   if (res.code === 0) {
+    router.push({
+      path: `/`,
+    });
     message.success("提交成功");
   } else {
     message.error("提交失败，" + res.message);
