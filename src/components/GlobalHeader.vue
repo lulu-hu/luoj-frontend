@@ -23,7 +23,30 @@
       </a-menu>
     </a-col>
     <a-col flex="100px">
-      <div>{{ store.state.user?.loginUser?.userName ?? "未登录" }}</div>
+      <a-dropdown>
+        <a-avatar class="AvatarHover" v-if="store.state.user.loginUser.id">
+          {{ store.state.user.loginUser.userName ?? "无名" }}
+        </a-avatar>
+        <a-avatar class="AvatarHover" v-else> 未登录</a-avatar>
+        <template #content>
+          <a-doption v-if="!store.state.user.loginUser.id">
+            <template #icon>
+              <icon-user />
+            </template>
+            <template #default>
+              <a-anchor-link @click="Login"> 登录</a-anchor-link>
+            </template>
+          </a-doption>
+          <a-doption v-if="store.state.user.loginUser.id">
+            <template #icon>
+              <icon-poweroff />
+            </template>
+            <template #default>
+              <a-anchor-link @click="Layout"> 退出登录</a-anchor-link>
+            </template>
+          </a-doption>
+        </template>
+      </a-dropdown>
     </a-col>
   </a-row>
 </template>
@@ -35,6 +58,8 @@ import { computed, ref } from "vue";
 import { useStore } from "vuex";
 import checkAccess from "@/access/checkAccess";
 import accessEnum from "@/access/accessEnum";
+import message from "@arco-design/web-vue/es/message";
+import { UserControllerService } from "../../generated";
 
 const router = useRouter();
 const store = useStore();
@@ -74,6 +99,36 @@ const doMenuClick = (key: string) => {
     path: key,
   });
 };
+
+/**
+ *  登录
+ * @param key
+ */
+const Login = async () => {
+  router.push({
+    path: "/user/login",
+    replace: true,
+  });
+};
+
+/**
+ *  退出登录
+ * @param key
+ */
+const Layout = async () => {
+  const res = await UserControllerService.userLogoutUsingPost();
+  localStorage.removeItem("Authorization");
+  if (res.code === 0) {
+    message.success("退出成功");
+    router.push({
+      path: "/",
+      replace: true,
+    });
+    location.reload();
+  } else {
+    message.error("退出失败");
+  }
+};
 </script>
 
 <style scoped>
@@ -89,5 +144,9 @@ const doMenuClick = (key: string) => {
 
 .logo {
   height: 50px;
+}
+
+.AvatarHover {
+  cursor: pointer;
 }
 </style>

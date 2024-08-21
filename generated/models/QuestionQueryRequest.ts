@@ -10,7 +10,6 @@ export type QuestionQueryRequest = {
     pageSize?: number;
     sortField?: string;
     sortOrder?: string;
-    submitNum?: number;
     tags?: Array<string>;
     title?: string;
     userId?: number;

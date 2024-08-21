@@ -5,5 +5,7 @@
 export type UserLoginRequest = {
     userAccount?: string;
     userPassword?: string;
+    verifyCode?: string;
+    verifyCodeKey?: string;
 };
 
