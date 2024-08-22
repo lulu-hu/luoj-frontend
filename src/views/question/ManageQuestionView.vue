@@ -38,6 +38,7 @@ const loadData = async () => {
   const res = await QuestionControllerService.listQuestionByPageUsingPost(
     searchParams.value
   );
+  console.log("res:", res);
   if (res.code === 0) {
     dataList.value = res.data.records;
     total.value = res.data.total;
@@ -87,7 +88,7 @@ const columns = [
   },
   {
     title: "通过数",
-    dataIndex: "acceptedNum",
+    dataIndex: "acceptNum",
   },
   {
     title: "判题配置",

@@ -2,7 +2,7 @@
   <div id="questionSubmitView">
     <a-form :model="searchParams" layout="inline">
       <a-form-item field="questionId" label="题号" style="min-width: 280px">
-        <a-input v-model="searchParams.questionId" placeholder="请输入" />
+        <a-input v-model="searchParams.questionId" placeholder="请输入题号" />
       </a-form-item>
       <a-form-item field="language" label="编程语言" style="min-width: 280px">
         <a-select
@@ -34,8 +34,16 @@
       }"
       @page-change="onPageChange"
     >
+      <template #status="{ record }">
+        {{ record.status == 2 ? "成功" : "失败" }}
+      </template>
       <template #judgeInfo="{ record }">
         {{ JSON.stringify(record.judgeInfo) }}
+      </template>
+      <template #questionId="{ record }">
+        <router-link :to="`/view/question/${record.questionId}`">
+          {{ record.questionId }}
+        </router-link>
       </template>
       <template #createTime="{ record }">
         {{ record.createTime }}
@@ -50,12 +58,14 @@ import {
   Question,
   QuestionControllerService,
   QuestionSubmitQueryRequest,
+  QuestionVO,
 } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import { useRouter } from "vue-router";
 
 const dataList = ref([]);
 const total = ref(0);
+const question = ref<QuestionVO>();
 const searchParams = ref<QuestionSubmitQueryRequest>({
   questionId: undefined,
   language: undefined,
@@ -71,6 +81,7 @@ const loadData = async () => {
       sortOrder: "descend",
     }
   );
+  console.log("res:", res);
   if (res.code === 0) {
     dataList.value = res.data.records;
     total.value = res.data.total;
@@ -109,18 +120,16 @@ const columns = [
   {
     title: "判题状态",
     dataIndex: "status",
+    slotName: "status",
   },
   {
     title: "题目 id",
     dataIndex: "questionId",
+    slotName: "questionId",
   },
   {
     title: "提交者 id",
     dataIndex: "userId",
-  },
-  {
-    title: "题目名称",
-    dataIndex: "title",
   },
   {
     title: "创建时间",

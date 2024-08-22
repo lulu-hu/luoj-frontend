@@ -74,26 +74,6 @@ const router = useRouter();
 const store = useStore();
 const captchaImage = ref("");
 
-// /**
-//  * 获取验证码
-//  */
-// const fetchCaptcha = async () => {
-//   try {
-//     const response =
-//       await UserControllerService.generateVerificationCodeUsingPost();
-//     if (response.code === 0) {
-//       const data = response.data;
-//       captchaImage.value = data.base64String; // 显示验证码图片
-//       form.verifyCodeKey = data.verifyCodeKey; // 保存验证码的key
-//     } else {
-//       message.error("获取验证码失败");
-//     }
-//   } catch (error) {
-//     console.error("Error fetching captcha:", error);
-//     message.error("获取验证码失败");
-//   }
-// };
-
 /**
  * 获取验证码
  */
