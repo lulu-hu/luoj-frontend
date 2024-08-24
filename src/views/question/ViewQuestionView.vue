@@ -32,7 +32,29 @@
               </template>
             </a-card>
           </a-tab-pane>
-          <a-tab-pane key="comment" title="评论" disabled> 评论区</a-tab-pane>
+          <a-tab-pane key="content" title="历史提交">
+            <a-list
+              :data="dataList"
+              :pagination-props="{
+                showTotal: true,
+                pageSize: searchParams.pageSize,
+                current: searchParams.current,
+                total,
+              }"
+              @page-change="onPageChange"
+            >
+              <a-collapse v-for="(item, index) in dataList" :key="index">
+                <a-collapse-item
+                  :header="`${item?.questionId || '无内容'} - 创建时间 ${
+                    item?.createTime || '无时间'
+                  }`"
+                  key="index"
+                >
+                  <div>{{ item?.code }}</div>
+                </a-collapse-item>
+              </a-collapse>
+            </a-list>
+          </a-tab-pane>
           <a-tab-pane key="answer" title="答案"> 答案</a-tab-pane>
         </a-tabs>
       </a-col>
@@ -75,16 +97,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, defineProps, withDefaults } from "vue";
+import { onMounted, ref, defineProps, withDefaults, watchEffect } from "vue";
 import {
   QuestionControllerService,
   type QuestionSubmitAddRequest,
+  QuestionSubmitQueryRequest,
   QuestionVO,
 } from "../../../generated";
 import message from "@arco-design/web-vue/es/message";
 import CodeEditor from "@/components/CodeEditor.vue";
 import MdViewer from "@/components/MdViewer.vue";
 import { useRouter } from "vue-router";
+import { dayjs } from "@arco-design/web-vue/es/_utils/date";
 
 interface Props {
   id: string;
@@ -96,13 +120,46 @@ const props = withDefaults(defineProps<Props>(), {
 
 const question = ref<QuestionVO>();
 const router = useRouter();
+const dataList = ref([]);
+const total = ref(0);
+
+const searchParams = ref<QuestionSubmitQueryRequest>({
+  questionId: undefined,
+  language: undefined,
+  pageSize: 10,
+  current: 1,
+});
+
+const onPageChange = (page: number) => {
+  searchParams.value = {
+    ...searchParams.value,
+    current: page,
+  };
+};
 
 const loadData = async () => {
   const res = await QuestionControllerService.getQuestionVoByIdUsingGet(
     props.id as any
   );
+  console.log("res1", res);
   if (res.code === 0) {
     question.value = res.data;
+  } else {
+    message.error("加载失败." + res.message);
+  }
+};
+
+const listData = async () => {
+  const res = await QuestionControllerService.listQuestionSubmitByPageUsingPost(
+    {
+      ...searchParams.value,
+      sortField: "createTime",
+      sortOrder: "descend",
+    }
+  );
+  if (res.code === 0) {
+    dataList.value = res.data.records;
+    total.value = res.data.total;
   } else {
     message.error("加载失败." + res.message);
   }
@@ -136,6 +193,15 @@ const doSubmit = async () => {
  */
 onMounted(() => {
   loadData();
+  listData();
+});
+
+/**
+ *  监听 searchParams 变量, 改变时出发页面的重新加载
+ */
+watchEffect(() => {
+  loadData();
+  listData();
 });
 
 const changeCode = (value: string) => {

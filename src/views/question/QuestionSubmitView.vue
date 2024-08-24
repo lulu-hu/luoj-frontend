@@ -81,7 +81,6 @@ const loadData = async () => {
       sortOrder: "descend",
     }
   );
-  console.log("res:", res);
   if (res.code === 0) {
     dataList.value = res.data.records;
     total.value = res.data.total;
